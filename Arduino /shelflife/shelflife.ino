@@ -46,8 +46,8 @@ NfcAdapter nfc = NfcAdapter(pn532_i2c);
 #define ADAFRUIT_CC3000_CS    10
 
 // WiFi network (change with your settings !)
-#define WLAN_SSID       "kerrin"        // cannot be longer than 32 characters!
-#define WLAN_PASS       "buster12"
+#define WLAN_SSID       "KERRIN"        // cannot be longer than 32 characters!
+#define WLAN_PASS       "11111111"
 #define WLAN_SECURITY   WLAN_SEC_WPA2 // This can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
 
 // Specify data and clock connections and instantiate SHT1x object
@@ -55,7 +55,7 @@ NfcAdapter nfc = NfcAdapter(pn532_i2c);
 #define clockPin 8
 
 
-
+String productID;
 
 
 // Create CC3000 & DHT instances
@@ -66,15 +66,43 @@ Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ
 
 
 // Local server IP, port, and repository (change with your settings !)
-uint32_t ip = cc3000.IP2U32(52, 24, 159, 58); //your computers ip address
-int port = 80;//your webserver port (8888 is the default for MAMP)
+uint32_t ip = cc3000.IP2U32(192,168,2,3); //your computers ip address
+int port = 8888;//your webserver port (8888 is the default for MAMP)
 //String repository = "/arduinoTest/";//the folder on your webserver where the sensor.php file is located
 
 
 
 
 
+// Function to send a TCP request and get the result as a string
+void send_request (String request) {
+     
+    // Connect    
+    Serial.println("Starting connection to server...");
+    Adafruit_CC3000_Client client = cc3000.connectTCP(ip, port);
+    
+    // Send request
+    if (client.connected()) {
+      client.println(request);      
+      client.println(F(""));
+      Serial.println("Connected & Data sent");
+    } 
+    else {
+      Serial.println(F("Connection failed"));    
+    }
 
+    while (client.connected()) {
+      while (client.available()) {
+
+      // Read answer
+      char c = client.read();
+      }
+    }
+    Serial.println("Closing connection");
+    Serial.println("");
+    client.close();
+    
+}
 
 
 
@@ -87,23 +115,23 @@ void setup(void)
   Serial.begin(115200);
 
   //  // Initialise the CC3000 module
-  //  if (!cc3000.begin())
-  //  {
-  //    while(1);
-  //  }
-  //
-  //  // Connect to  WiFi network
-  //  cc3000.connectToAP(WLAN_SSID, WLAN_PASS, WLAN_SECURITY);
-  //  Serial.println("Connected to WiFi network!");
-  //
-  //  // Check DHCP
-  //  Serial.println(F("Request DHCP"));
-  //  while (!cc3000.checkDHCP())
-  //  {
-  //    delay(100);
-  //
-  //
-  //  }
+    if (!cc3000.begin())
+    {
+      while(1);
+    }
+  
+    // Connect to  WiFi network
+    cc3000.connectToAP(WLAN_SSID, WLAN_PASS, WLAN_SECURITY);
+    Serial.println("Connected to WiFi network!");
+  
+    // Check DHCP
+    Serial.println(F("Request DHCP"));
+    while (!cc3000.checkDHCP())
+    {
+      delay(100);
+  
+  
+    }
 
 
   Serial.println("NDEF Reader");
@@ -142,6 +170,16 @@ void loop(void)
         }
           tag.toInt();
         Serial.println(tag);
+        
+        productID = tag;
+       
+    // Send request
+    String request = "GET /sendData.php?productID=" + productID + " HTTP/1.0";
+    send_request(request);
+    Serial.println("");
+    Serial.print("request: ");
+    Serial.println(request);
+    Serial.println("");
 
       
     }
@@ -150,5 +188,7 @@ void loop(void)
   delay(5000);
 
 }
+
+
 
 
