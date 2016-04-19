@@ -3,13 +3,38 @@
 <script> 
     
 var ref = new Firebase("https://shelflife.firebaseio.com/reader");
+    
 
 
 ref.on("child_added", function(snapshot) {
-  var idScan = snapshot.val();
-  console.log(idScan);
+  var id = snapshot.val();
+  console.log(id);
  
     ref.remove();
+   
+    var pref = new Firebase("https://shelflife.firebaseio.com/userProducts");
+  pref.once("value", function(snapshot) {
+      
+       if(snapshot.child(id).exists()) {
+           console.log("it exists, i'm removing it");
+          pref.child(id).remove();
+           
+       }
+      
+      
+      else {
+          
+          console.log("not there, adding it");
+          pref.child(id+"/Name").set("eggs");
+          
+      }
+      
+      
+      
+  });
+    
+    
+    
     
  
 });

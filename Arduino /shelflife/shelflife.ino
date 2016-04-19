@@ -23,6 +23,8 @@ PN532_SPI pn532spi(SPI, 10);
 NfcAdapter nfc = NfcAdapter(pn532spi);
 #else
 
+
+
 #include <Wire.h>
 #include <PN532_I2C.h>
 #include <PN532.h>
@@ -46,13 +48,11 @@ NfcAdapter nfc = NfcAdapter(pn532_i2c);
 #define ADAFRUIT_CC3000_CS    10
 
 // WiFi network (change with your settings !)
-#define WLAN_SSID       "KERRIN"        // cannot be longer than 32 characters!
+#define WLAN_SSID       "Kerrin"        // cannot be longer than 32 characters!
 #define WLAN_PASS       "11111111"
 #define WLAN_SECURITY   WLAN_SEC_WPA2 // This can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
 
-// Specify data and clock connections and instantiate SHT1x object
-#define dataPin  9
-#define clockPin 8
+
 
 
 String productID;
@@ -66,7 +66,7 @@ Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ
 
 
 // Local server IP, port, and repository (change with your settings !)
-uint32_t ip = cc3000.IP2U32(192,168,2,3); //your computers ip address
+uint32_t ip = cc3000.IP2U32(159,91,230,209); //your computers ip address
 int port = 8888;//your webserver port (8888 is the default for MAMP)
 //String repository = "/arduinoTest/";//the folder on your webserver where the sensor.php file is located
 
@@ -113,25 +113,37 @@ void setup(void)
 
 
   Serial.begin(115200);
+  
+Serial.println(F("Hello, CC3000!\n")); 
 
-  //  // Initialise the CC3000 module
-    if (!cc3000.begin())
-    {
-      while(1);
-    }
+
   
-    // Connect to  WiFi network
-    cc3000.connectToAP(WLAN_SSID, WLAN_PASS, WLAN_SECURITY);
-    Serial.println("Connected to WiFi network!");
+  /* Initialise the module */
+  Serial.println(F("\nInitializing..."));
+  if (!cc3000.begin())
+  {
+    Serial.println(F("Couldn't begin()! Check your wiring?"));
+    while(1);
+  }
   
-    // Check DHCP
-    Serial.println(F("Request DHCP"));
-    while (!cc3000.checkDHCP())
-    {
-      delay(100);
+  // Optional SSID scan
+  // listSSIDResults();
   
+  Serial.print(F("\nAttempting to connect to ")); Serial.println(WLAN_SSID);
+  if (!cc3000.connectToAP(WLAN_SSID, WLAN_PASS, WLAN_SECURITY)) {
+    Serial.println(F("Failed!"));
+    while(1);
+  }
+   
+  Serial.println(F("Connected!"));
   
-    }
+  /* Wait for DHCP to complete */
+  Serial.println(F("Request DHCP"));
+  while (!cc3000.checkDHCP())
+  {
+    delay(100); // ToDo: Insert a DHCP timeout!
+  }
+
 
 
   Serial.println("NDEF Reader");
@@ -164,28 +176,32 @@ void loop(void)
 
         // Force the data into a String (might work depending on the content)
         // Real code should use smarter processing
-        String tag = "";
-        for (int c = 0; c < payloadLength; c++) {
-          tag += (char)payload[c];
-        }
-          tag.toInt();
+      String tag = "";
+     for (int c = 0; c < payloadLength; c++) {
+         tag += (int)payload[c];
+      }
+         // tag.toInt();
         Serial.println(tag);
         
-        productID = tag;
+      
+        
+      
+       
+       productID = tag;
        
     // Send request
     String request = "GET /sendData.php?productID=" + productID + " HTTP/1.0";
     send_request(request);
     Serial.println("");
     Serial.print("request: ");
-    Serial.println(request);
+   // Serial.println(request);
     Serial.println("");
 
       
     }
 
   }
-  delay(5000);
+  delay(1000);
 
 }
 
