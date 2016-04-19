@@ -12,12 +12,12 @@ ref.on("child_added", function(snapshot) {
  
     ref.remove();
    
-    var pref = new Firebase("https://shelflife.firebaseio.com/userProducts");
-  pref.once("value", function(snapshot) {
+    var uref = new Firebase("https://shelflife.firebaseio.com/userProducts");
+  uref.once("value", function(snapshot) {
       
        if(snapshot.child(id).exists()) {
            console.log("it exists, i'm removing it");
-          pref.child(id).remove();
+          uref.child(id).remove();
            
        }
       
@@ -25,8 +25,27 @@ ref.on("child_added", function(snapshot) {
       else {
           
           console.log("not there, adding it");
-          pref.child(id+"/Name").set("eggs");
           
+          var pref = new Firebase("https://shelflife.firebaseio.com/products/"+id);
+        
+        
+            pref.on("value", function(snapshot) {
+              console.log("getting data");
+            var productData = snapshot.val();
+              console.log(productData.Name);
+              console.log(productData.expireDate);
+              console.log(productData.imageRef);
+              
+                var name = productData.Name; 
+                var expire = productData.expireDate; 
+                var image = productData.imageRef; 
+              
+        uref.child(id+"/Name").set(name);
+        uref.child(id+"/expireDate").set(expire); 
+        uref.child(id+"/imageRef").set(image);
+          
+              
+          });
       }
       
       
