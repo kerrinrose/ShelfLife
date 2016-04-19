@@ -190,11 +190,11 @@ void loop(void)
        productID = tag;
        
     // Send request
-    String request = "GET /sendData.php?productID=" + productID + " HTTP/1.0";
+    String request = "GET /main.php?ID=" + productID + " HTTP/1.0";
     send_request(request);
     Serial.println("");
     Serial.print("request: ");
-   // Serial.println(request);
+    Serial.println(request);
     Serial.println("");
 
       

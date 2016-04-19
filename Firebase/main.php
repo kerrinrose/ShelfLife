@@ -11,10 +11,11 @@ $firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
 if ($_GET["ID"]) {
     $ID = $_GET["ID"];
 
+$intID = (int)$ID;
+$intID = $intID - 48;
+    echo $intID;
 
-    
-// --- reading the stored string ---
-$name = $firebase->set('reader/ID', $ID);
+$name = $firebase->set('reader/ID', '0'+$intID);
     
 
     
