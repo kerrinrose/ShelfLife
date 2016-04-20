@@ -1,0 +1,88 @@
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+<script> 
+    
+var ref = new Firebase("https://shelflife.firebaseio.com/reader");
+var uref = new Firebase("https://shelflife.firebaseio.com/userProducts"); 
+ 
+
+function populate() {
+//populate the interface to begin with
+console.log("running populate"); 
+    
+uref.once("value", function(snapshot) { 
+   
+    
+    
+});
+    
+    
+}
+    
+    
+    
+ref.on("child_added", function(snapshot) {
+    
+  var id = snapshot.val();
+  console.log("Child was added, the id is " + id);
+    ref.remove();
+    
+    checkIfExists(id);
+    
+});
+    
+    
+    function checkIfExists(id) {
+        
+        
+        
+       uref.once("value", function(snapshot) {
+           
+           if(snapshot.child(id).exists()) {
+               console.log("I exist");
+               uref.child(id).remove();
+                console.log("I removed "+ id);
+            
+            
+           
+               
+           }
+           
+           
+           else {
+               
+            console.log("I don't exist");
+               
+               var pref = new Firebase("https://shelflife.firebaseio.com/products/"+id); 
+                pref.on("value", function(snapshot) {
+                console.log("getting data from "+ id);
+            var productData = snapshot.val();
+              console.log(productData.Name);
+              console.log(productData.expireDate);
+              console.log(productData.imageRef);
+              
+                var name = productData.Name; 
+                var expire = productData.expireDate; 
+                var image = productData.imageRef;
+                
+                
+        uref.child(id+"/Name").set(name);
+        uref.child(id+"/expireDate").set(expire); 
+        uref.child(id+"/imageRef").set(image);
+               
+            });
+               
+           }
+
+
+      
+      
+  });   
+        
+    }
+    
+    
+    
+
+
+</script>

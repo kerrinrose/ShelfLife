@@ -1,0 +1,27 @@
+
+body {
+ background-color: #eeedef;   
+    
+}
+
+
+.itemContainer {
+    
+ width: 90%;
+    margin: 0 auto;
+    
+}
+
+.item {
+    
+ display: inline-block;
+width: 29%;
+  margin: 2%;
+    box-sizing: border-box;
+    
+}
+
+.item img {
+    
+ width: 100%;   
+}
