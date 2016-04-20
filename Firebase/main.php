@@ -13,9 +13,9 @@ if ($_GET["ID"]) {
 
 $intID = (int)$ID;
 $intID = $intID - 48;
-    echo $intID;
+    
 
-$name = $firebase->set('reader/ID', '0'+$intID);
+$name = $firebase->set('reader/ID', $intID);
     
 
     
