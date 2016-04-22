@@ -7,12 +7,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     
-<link rel="stylesheet" href="style.css">    
+<link rel="stylesheet" href="style.css">
+<link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
+<link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-styles/default-theme.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 </head>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+<script src="main.js"></script> 
+    
 
 <body onload="populate()">
     
-    <div id="itemContainer"> </div>
+    <div id="itemContainer">
+        
+        <section class="item">
+           
+   <div class="absItem">
+        <paper-material elevation="1">
+ <img src="images/eggs.png">
+  <span>Cat</span>
+             </paper-material>
+   </div>
+           
+ </section>
+ <section class="item">
+   <div class="absItem">
+  <img src="images/eggs.png">
+  <span>Cat</span>
+   </div>
+ </section> <section class="item">
+   <div class="absItem">
+   <img src="images/eggs.png">
+  <span>Cat</span>
+   </div>
+ </section> <section class="item">
+   <div class="absItem">
+   <img src="images/eggs.png">
+  <span>Cat</span>
+   </div>
+ </section> <section class="item">
+   <div class="absItem">
+  <img src="images/eggs.png">
+  <span>Cat</span>
+   </div>
+ </section> <section class="item">
+   <div class="absItem">
+  <img src="images/eggs.png">
+  <span>Cat</span>
+   </div>
+ </section> </div>
+    
+    
+    
+    
+    
+    <script>
+  
+
+var i = 0;
+$('.item').each(function() {
+
+    i++;
+    i = i%3;
+
+    if (i == 1) $(this).addClass('left');  
+    else if (i == 2) $(this).addClass('middle');
+    else $(this).addClass('right');
+  
+  
+  
+});
+
+
+
+     $('.absItem').on('click', function() {
+
+    var active = $(this).parent().hasClass('index');
+
+    if (!active) {
+    $('.scaleTransLeft').removeClass('scaleTransLeft').find('span').hide();
+    $('.scaleTransMid').removeClass('scaleTransMid').find('span').hide();
+    $('.scaleTransRight').removeClass('scaleTransRight').find('span').hide();
+    $('.index').removeClass('index');
+    }
+
+    if ($(this).parent().hasClass('left'))       $(this).toggleClass('scaleTransLeft').find('span').toggle();
+    else if ($(this).parent().hasClass('middle')) $(this).toggleClass('scaleTransMid').find('span').toggle();
+    else if ($(this).parent().hasClass('right')) $(this).toggleClass('scaleTransRight').find('span').toggle();
+
+    $(this).parent().toggleClass('index');
+});
+
+</script>
     
 </body>
 </html>
@@ -21,124 +115,7 @@
 
 
 
-
-<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
-
-<script> 
-    
-     function makeInterface(name, id, image) {
-        
-       var x = document.createElement("section");
-       x.setAttribute("id", id);
-         x.setAttribute("class", "item");
-    document.getElementById("itemContainer").appendChild(x);
-     var img = document.createElement("img");
-       img.setAttribute("src", image);
-    var heading = document.createElement("H1");
-    var txt1 = document.createTextNode(name);
-    heading.appendChild(txt1);
-    document.getElementById(id).appendChild(heading);
-      document.getElementById(id).appendChild(img);     
-         
-         
-    };
-    
-var ref = new Firebase("https://shelflife.firebaseio.com/reader");
-
-    var uref = new Firebase("https://shelflife.firebaseio.com/userProducts");
-    
-    function populate() { //populate the interface to begin with
-    uref.once("value", function(snapshot) {
-        console.log("running begin function");
-        
-         snapshot.forEach(function(data) {
-             var id = data.key();
-             console.log("for each data: " + id);
-              
-             
-             
-        var itemref = new Firebase("https://shelflife.firebaseio.com/userProducts/"+id);
-        
-             itemref.once("value", function(snapshot) {
-             var productData = snapshot.val();  
-               var name = productData.Name;
-                var image = productData.imageRef; 
-              console.log(productData.expireDate);
-              console.log(productData.imageRef);
-                 
-               makeInterface(name, id, image);
-                 
-                  
-           });
-             
-             
-             
-         });
-        
-    });
-        
-    };
-    
-
-ref.on("child_added", function(snapshot) {
-  var id = snapshot.val();
-  console.log(id);
- 
-    ref.remove();
    
-
-  uref.once("value", function(snapshot) {
-      
-       if(snapshot.child(id).exists()) {
-           console.log("it exists, i'm removing it");
-
-           var parent = document.getElementById("itemContainer");
-var child = document.getElementById(id);
-parent.removeChild(child);
-          uref.child(id).remove();
-          
-           
-       }
-      
-      
-      else {
-          
-          console.log("not there, adding it");
-          
-          var pref = new Firebase("https://shelflife.firebaseio.com/products/"+id);
-        
-        
-            pref.on("value", function(snapshot) {
-          //    console.log("getting data");
-            var productData = snapshot.val();
-              console.log(productData.Name);
-              console.log(productData.expireDate);
-              console.log(productData.imageRef);
-              
-                var name = productData.Name; 
-                var expire = productData.expireDate; 
-                var image = productData.imageRef; 
-              
-        uref.child(id+"/Name").set(name);
-        uref.child(id+"/expireDate").set(expire); 
-        uref.child(id+"/imageRef").set(image);
-                
-               makeInterface(name,id, image);
-          
-              
-          });
-      }
-      
-      
-      
-  });
-    
-    
-    
-    
- 
-});
-    
     
     
    
@@ -146,5 +123,3 @@ parent.removeChild(child);
     
     
 
-
-</script>

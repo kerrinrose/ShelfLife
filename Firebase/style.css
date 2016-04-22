@@ -5,23 +5,97 @@ body {
 }
 
 
-.itemContainer {
+#itemContainer {
     
- width: 90%;
+ width: 95%;
     margin: 0 auto;
+    padding-left: 15px;
+    
     
 }
 
 .item {
     
- display: inline-block;
-width: 29%;
-  margin: 2%;
-    box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  width: 28%;
+  height: 200px;
+    margin: 2%;
+  box-sizing: border-box;
+/*   position: absolute; */
+  z-index: 99;
+  -webkit-transition: z-index .5s;
+  /* For Safari 3.1 to 6.0 */
+  transition: z-index .5s;
     
 }
+
+
 
 .item img {
     
  width: 100%;   
+}
+
+.item span {
+    
+ display: none;   
+     background-color: #fff;
+}
+
+
+.absItem {
+  
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right:0;
+  z-index: 90;
+  -webkit-transition: bottom 1s, right 1s, left 1s;
+  transition: bottom 1s, right 1s, left 1s;
+   
+  
+}
+
+
+
+
+.scaleTransLeft {
+  bottom : -30px;
+  right: -30px;
+
+}
+
+
+.scaleTransMid {
+  bottom : -30px;
+  right: -15px;
+  left: -15px;
+
+}
+
+
+.scaleTransRight {
+  bottom : -30px;
+  left: -30px;
+
+}
+
+.index {
+  z-index: 100;
+  
+}
+
+.left {
+  
+}
+
+.middle {
+  
+  
+}
+
+.right {
+  
 }
