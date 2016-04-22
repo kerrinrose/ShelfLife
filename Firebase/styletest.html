@@ -1,0 +1,62 @@
+
+
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    
+<link rel="stylesheet" type="text/css" href="style.css">  
+    
+     <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
+<link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-styles/default-theme.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+</head>
+
+<body>
+    <paper-toolbar>
+  <paper-icon-button icon="menu"></paper-icon-button>
+  <span class="title">Title</span>
+  <paper-icon-button icon="refresh"></paper-icon-button>
+  <paper-icon-button icon="add">+</paper-icon-button>
+</paper-toolbar>
+    
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    
+    <div id="itemContainer">
+        <section class="item animateLeft"><paper-material elevation="1"><img src="images/eggs.png">
+            <span>Eggs <br>
+            Added four days ago on 4/16/16<br>
+            Good for approx. 2 more weeks    
+                
+            
+            </span>
+            </paper-material>
+        </section><section class="item animateCenter"><img src="images/eggs.png"></section
+        ><section class="item animateRight"><img src="images/eggs.png"></section> </div>
+    
+<script>
+    
+$(".item").on("click", function()   {
+    
+   $(this).children("span").show(); 
+    $(this).addClass('scaleTrans');
+    $(".item").addClass('abs');
+   
+    
+});
+    
+</script>
+    
+    </body>
+    
+    
+</html>

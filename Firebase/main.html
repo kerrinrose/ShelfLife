@@ -22,22 +22,44 @@
 <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
 
 <script src="main.js"></script> 
-    
+    <style is="custom-style">
+  paper-icon-button.giant {
+    width: 60px;
+    height: 60px;
+      
+      
+  }
+</style>
 
 <body onload="populate()">
+    <paper-material elevation="1"> <header>
+        <nav class="icon"><paper-icon-button icon="menu" class="giant"></paper-icon-button></nav><nav class="text">Your Food</nav><nav class="icon"><paper-icon-button icon="search" class="giant"></paper-icon-button></nav>
+        </header> </paper-material>
+    <section class="filter">Showing <em>all</em> by <em>newest</em></section>
+    
     
     <div id="itemContainer">
         
-        <section class="item">
-           
+<section class="item">       
    <div class="absItem">
-        <paper-material elevation="1">
- <img src="images/eggs.png">
-  <span>Cat</span>
-             </paper-material>
-   </div>
-           
- </section>
+      
+    <paper-material elevation="1">
+        <div class="freshMeterGreen"></div>
+        <div class="inner">
+         <img src="images/eggs.png">
+            <span>
+                <h1>Eggs</h1>
+                <p>Added two days ago on 4/27/16</p>
+                <p>Good for approx. 2 more weeks</p>
+                 
+            </span>
+        </div>
+        </paper-material>
+       
+       </div>
+</section>
+        
+        
  <section class="item">
    <div class="absItem">
   <img src="images/eggs.png">
@@ -86,6 +108,8 @@ $('.item').each(function() {
   
 });
 
+        
+        
 
 
      $('.absItem').on('click', function() {
