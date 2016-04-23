@@ -8,13 +8,51 @@ function makeInterface(name, id, image) {
        x.setAttribute("id", id);
          x.setAttribute("class", "item");
     document.getElementById("itemContainer").appendChild(x);
+    
+    var div = document.createElement("div");
+    div.setAttribute("class", "absItem");
+    x.appendChild(div);
+    
+    var paper = document.createElement("paper-material");
+    paper.setAttribute("elevation", "1");
+    div.appendChild(paper);
+    
+    var fresh = document.createElement("div");
+    fresh.setAttribute("class", "freshMeterGreen");
+    paper.appendChild(fresh);
+    
+    var inner = document.createElement("div");
+    inner.setAttribute("class", "inner");
+    paper.appendChild(inner);
+    
      var img = document.createElement("img");
-       img.setAttribute("src", image);
+     img.setAttribute("src", image);
+     inner.appendChild(img); 
+    
+    var span = document.createElement("span");
+    inner.appendChild(span);
+    
+    
     var heading = document.createElement("H1");
     var txt1 = document.createTextNode(name);
     heading.appendChild(txt1);
-    document.getElementById(id).appendChild(heading);
-      document.getElementById(id).appendChild(img);     
+    span.appendChild(heading);
+    
+    
+    var i = 0;
+$('.item').each(function() {
+
+    i++;
+    i = i%3;
+
+    if (i == 1) $(this).addClass('left');  
+    else if (i == 2) $(this).addClass('middle');
+    else $(this).addClass('right');
+  
+  
+  
+});
+         
          
          
     };
