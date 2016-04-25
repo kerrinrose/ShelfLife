@@ -60,7 +60,8 @@ nav {
 }
 
 .item {
-    
+    opacity: 0;
+    transform: scale(.1);
   position: relative;
   display: inline-block;
   width: 28%;
@@ -69,10 +70,19 @@ nav {
   box-sizing: border-box;
 /*   position: absolute; */
   z-index: 99;
-  -webkit-transition: z-index .2s;
+  -webkit-transition: z-index .2s, opacity .5s, transform, .5s;
   /* For Safari 3.1 to 6.0 */
-  transition: z-index .2s;
+  transition: z-index .2s, opacity .5s, transform, .5s;
     background-color: #fff;
+    
+    
+}
+
+
+.in {
+    
+opacity: 1;
+transform:scale(1); 
     
 }
 

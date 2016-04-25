@@ -32,13 +32,14 @@
 </style>
 
 <body onload="populate()">
-    <paper-material elevation="1"> <header>
+    <paper-material elevation="2"> <header>
         <nav class="icon"><paper-icon-button icon="menu" class="giant"></paper-icon-button></nav><nav class="text">Your Food</nav><nav class="icon"><paper-icon-button icon="search" class="giant"></paper-icon-button></nav>
         </header> </paper-material>
     <section class="filter">Showing <em>all</em> by <em>newest</em></section>
     
     
     <div id="itemContainer">
+<!--
         
 <section class="item">       
    <div class="absItem">
@@ -58,34 +59,10 @@
        
        </div>
 </section>
+-->
         
         
- <section class="item">
-   <div class="absItem">
-  <img src="images/eggs.png">
-  <span>Cat</span>
-   </div>
- </section> <section class="item">
-   <div class="absItem">
-   <img src="images/eggs.png">
-  <span>Cat</span>
-   </div>
- </section> <section class="item">
-   <div class="absItem">
-   <img src="images/eggs.png">
-  <span>Cat</span>
-   </div>
- </section> <section class="item">
-   <div class="absItem">
-  <img src="images/eggs.png">
-  <span>Cat</span>
-   </div>
- </section> <section class="item">
-   <div class="absItem">
-  <img src="images/eggs.png">
-  <span>Cat</span>
-   </div>
- </section> </div>
+ </div>
     
     
     
@@ -127,9 +104,10 @@ $('.item').each(function() {
 
 function makeInterface(name, id, image) {
         
-       var x = document.createElement("section");
-       x.setAttribute("id", id);
-         x.setAttribute("class", "item");
+    var x = document.createElement("section");
+    x.setAttribute("id", id);
+     x.setAttribute("class", "item");
+
     document.getElementById("itemContainer").appendChild(x);
     
     var div = document.createElement("div");
@@ -161,8 +139,19 @@ function makeInterface(name, id, image) {
     heading.appendChild(txt1);
     span.appendChild(heading);
     
+    var added = document.createElement("p");
+    var addedTxt = document.createTextNode("Added two days ago");
+    added.appendChild(addedTxt);
+    span.appendChild(added);
+    
+    var good4 = document.createElement("p");
+    var good4Txt = document.createTextNode("Good for approx. 3 more days");
+    good4.appendChild(good4Txt);
+    span.appendChild(good4);
 
     
+        window.getComputedStyle(x).opacity;
+    x.className += ' in';
          
          
          
@@ -217,14 +206,25 @@ ref.on("child_added", function(snapshot) {
    
 
   uref.once("value", function(snapshot) {
+      console.log("there is a value");
       
        if(snapshot.child(id).exists()) {
            console.log("it exists, i'm removing it");
+           
+           
+           $("#"+id).removeClass('in');
 
-           var parent = document.getElementById("itemContainer");
+
+setTimeout(function(){
+
+var parent = document.getElementById("itemContainer");
 var child = document.getElementById(id);
 parent.removeChild(child);
           uref.child(id).remove();
+
+},500);
+
+
           
            
        }
@@ -308,69 +308,6 @@ parent.removeChild(child);
         
 
 
-
-        
-    
-    
-
-ref.on("child_added", function(snapshot) {
-  var id = snapshot.val();
-  console.log(id);
- 
-    ref.remove();
-   
-
-  uref.once("value", function(snapshot) {
-      
-       if(snapshot.child(id).exists()) {
-           console.log("it exists, i'm removing it");
-
-           var parent = document.getElementById("itemContainer");
-var child = document.getElementById(id);
-parent.removeChild(child);
-          uref.child(id).remove();
-          
-           
-       }
-      
-      
-      else {
-          
-          console.log("not there, adding it");
-          
-          var pref = new Firebase("https://shelflife.firebaseio.com/products/"+id);
-        
-        
-            pref.on("value", function(snapshot) {
-          //    console.log("getting data");
-            var productData = snapshot.val();
-              console.log(productData.Name);
-              console.log(productData.expireDate);
-              console.log(productData.imageRef);
-              
-                var name = productData.Name; 
-                var expire = productData.expireDate; 
-                var image = productData.imageRef; 
-              
-        uref.child(id+"/Name").set(name);
-        uref.child(id+"/expireDate").set(expire); 
-        uref.child(id+"/imageRef").set(image);
-                
-               makeInterface(name,id, image);
-          
-              
-          });
-      }
-      
-      
-      
-  });
-    
-    
-    
-    
- 
-});
         
         
         

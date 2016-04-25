@@ -48,7 +48,7 @@ NfcAdapter nfc = NfcAdapter(pn532_i2c);
 #define ADAFRUIT_CC3000_CS    10
 
 // WiFi network (change with your settings !)
-#define WLAN_SSID       "Kerrin"        // cannot be longer than 32 characters!
+#define WLAN_SSID       "kerrin"        // cannot be longer than 32 characters!
 #define WLAN_PASS       "11111111"
 #define WLAN_SECURITY   WLAN_SEC_WPA2 // This can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
 
@@ -66,8 +66,8 @@ Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ
 
 
 // Local server IP, port, and repository (change with your settings !)
-uint32_t ip = cc3000.IP2U32(159,91,230,209); //your computers ip address
-int port = 8888;//your webserver port (8888 is the default for MAMP)
+uint32_t ip = cc3000.IP2U32(54,164,177,88); //your computers ip address
+int port = 80;//your webserver port (8888 is the default for MAMP)
 //String repository = "/arduinoTest/";//the folder on your webserver where the sensor.php file is located
 
 
@@ -190,7 +190,7 @@ void loop(void)
        productID = tag;
        
     // Send request
-    String request = "GET /main.php?ID=" + productID + " HTTP/1.0";
+    String request = "GET /Firebase/main.php?ID=" + productID + " HTTP/1.0";
     send_request(request);
     Serial.println("");
     Serial.print("request: ");
@@ -201,7 +201,7 @@ void loop(void)
     }
 
   }
-  delay(1000);
+  delay(2000);
 
 }
 
