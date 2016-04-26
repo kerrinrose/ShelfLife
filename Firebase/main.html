@@ -15,6 +15,7 @@
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-styles/default-theme.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
 </head>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
@@ -30,7 +31,7 @@
       
   }
 </style>
-
+<meta name="mobile-web-app-capable" content="yes">
 <body onload="populate()">
     <paper-material elevation="2"> <header>
         <nav class="icon"><paper-icon-button icon="menu" class="giant"></paper-icon-button></nav><nav class="text">Your Food</nav><nav class="icon"><paper-icon-button icon="search" class="giant"></paper-icon-button></nav>
@@ -71,7 +72,7 @@
     <script>
         
         
-        
+     var body = document.documentElement; if (body.requestFullscreen) { body.requestFullscreen(); } else if (body.webkitrequestFullscreen) { body.webkitrequestFullscreen(); } else if (body.mozrequestFullscreen) { body.mozrequestFullscreen(); } else if (body.msrequestFullscreen) { body.msrequestFullscreen(); }    
   
 
 var i = 0;

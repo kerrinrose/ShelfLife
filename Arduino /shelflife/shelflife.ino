@@ -86,6 +86,9 @@ void send_request (String request) {
       client.println(request);      
       client.println(F(""));
       Serial.println("Connected & Data sent");
+       digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);              // wait for a second
+  digitalWrite(13, LOW);
     } 
     else {
       Serial.println(F("Connection failed"));    
@@ -110,7 +113,7 @@ void send_request (String request) {
 void setup(void)
 {
 
-
+ pinMode(13, OUTPUT);
 
   Serial.begin(115200);
   
@@ -148,7 +151,17 @@ Serial.println(F("Hello, CC3000!\n"));
 
   Serial.println("NDEF Reader");
   nfc.begin();
-
+   digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(200);              // wait for a second
+  digitalWrite(13, LOW);
+  delay(200); 
+   digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(200);              // wait for a second
+  digitalWrite(13, LOW);
+  delay(200); 
+   digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(200);              // wait for a second
+  digitalWrite(13, LOW);
 }
 
 void loop(void)
@@ -201,7 +214,7 @@ void loop(void)
     }
 
   }
-  delay(2000);
+  delay(500);
 
 }
 

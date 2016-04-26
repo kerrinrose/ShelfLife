@@ -1,6 +1,7 @@
 body {
      background-color: #eeedef;
- font-family: 'Gotham-Medium';   
+ font-family: 'Roboto';   
+font-weight: 500;
     margin: 0px;
 }
 
@@ -65,7 +66,7 @@ nav {
   position: relative;
   display: inline-block;
   width: 28%;
-  height: 200px;
+  height: 150px;
     margin: 2%;
   box-sizing: border-box;
 /*   position: absolute; */
@@ -114,14 +115,15 @@ span h1 {
  position: absolute;
     top: 0;
     left: 0;
-    height: 35px;
-    width: 35px;
+    height: 25px;
+    width: 25px;
     background-color: #67c5b5;
     display: block;
 }
 
 span p {
-    font-family: "Gotham-Book";
+    font-family: "Roboto";
+    font-weight: 400;
 margin: 0px;
  padding: 0px 15px 8px 15px; 
 }
@@ -146,22 +148,22 @@ margin: 0px;
 
 .scaleTransLeft {
   bottom : -80px;
-  right: -80px;
+  right: -120px;
 
 }
 
 
 .scaleTransMid {
   bottom : -80px;
-  right: -40px;
-  left: -40px;
+  right: -60px;
+  left: -60px;
 
 }
 
 
 .scaleTransRight {
   bottom : -80px;
-  left: -80px;
+  left: -120px;
 
 }
 
@@ -172,7 +174,7 @@ margin: 0px;
 
 .inner {
     
- min-height: 200px;
+ min-height: 150px;
         background-color: #fff;
 }
 
