@@ -99,14 +99,22 @@ $('.item').each(function() {
  };
 
         
-      
+function getExpire(expire) {
+    
+var added = new Date("4/29/2016");
+var expire = new Date(expire);
+var timeDiff = Math.abs(expire.getTime() - added.getTime());
+var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+return diffDays; 
+    
+};
         
         
 
 
 
 
-function makeInterface(name, id, image) {
+function makeInterface(name, id, image, expire) {
         
     var x = document.createElement("section");
     x.setAttribute("id", id);
@@ -122,9 +130,6 @@ function makeInterface(name, id, image) {
     paper.setAttribute("elevation", "1");
     div.appendChild(paper);
     
-    var fresh = document.createElement("div");
-    fresh.setAttribute("class", "freshMeterGreen");
-    paper.appendChild(fresh);
     
     var inner = document.createElement("div");
     inner.setAttribute("class", "inner");
@@ -144,15 +149,40 @@ function makeInterface(name, id, image) {
     span.appendChild(heading);
     
     var added = document.createElement("p");
-    var addedTxt = document.createTextNode("Added two days ago");
+    var addedTxt = document.createTextNode("Added Today");
     added.appendChild(addedTxt);
     span.appendChild(added);
     
+   var days = getExpire(expire);
     var good4 = document.createElement("p");
-    var good4Txt = document.createTextNode("Good for approx. 3 more days");
+    var good4Txt = document.createTextNode("Good for approx. " + days + " days");
     good4.appendChild(good4Txt);
     span.appendChild(good4);
+    
+    if(days < 7) {
+        
+         var fresh = document.createElement("div");
+    fresh.setAttribute("class", "freshMeterRed");
+    paper.appendChild(fresh);
+        
+    }
+    
+    else if(days < 20) {
+        
+         var fresh = document.createElement("div");
+    fresh.setAttribute("class", "freshMeterYellow");
+    paper.appendChild(fresh);
+        
+    }
+        
+        else {
+            
+          var fresh = document.createElement("div");
+    fresh.setAttribute("class", "freshMeterGreen");
+    paper.appendChild(fresh);   
+        }
 
+    
     
         window.getComputedStyle(x).opacity;
     x.className += ' in';
@@ -183,10 +213,11 @@ var ref = new Firebase("https://shelflife.firebaseio.com/reader");
              var productData = snapshot.val();  
                var name = productData.Name;
                 var image = productData.imageRef; 
+                 var expire = productData.expireDate;
               console.log(productData.expireDate);
               console.log(productData.imageRef);
                  
-               makeInterface(name, id, image);
+               makeInterface(name, id, image, expire);
                  
                   
            });
@@ -260,7 +291,7 @@ parent.removeChild(child);
                 
                 
                 
-               makeInterface(name,id, image);
+               makeInterface(name,id, image, expire);
                  setTimeout(function() { eachFunc();}, 1000);
           
               

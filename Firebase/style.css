@@ -121,6 +121,29 @@ span h1 {
     display: block;
 }
 
+.freshMeterYellow {
+    
+ position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ffe161;
+    display: block;
+}
+
+
+.freshMeterRed {
+    
+ position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #f16472;
+    display: block;
+}
+
 span p {
     font-family: "Roboto";
     font-weight: 400;
