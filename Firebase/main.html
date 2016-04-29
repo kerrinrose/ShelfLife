@@ -75,16 +75,19 @@
      var body = document.documentElement; if (body.requestFullscreen) { body.requestFullscreen(); } else if (body.webkitrequestFullscreen) { body.webkitrequestFullscreen(); } else if (body.mozrequestFullscreen) { body.mozrequestFullscreen(); } else if (body.msrequestFullscreen) { body.msrequestFullscreen(); }    
   
 
-var i = 0;
+
         
  function eachFunc() {       
-        
+      var i = 0;  
      console.log("running eachFunc");
 $('.item').each(function() {
 
     i++;
     i = i%3;
-
+    
+    $(this).removeClass('left');
+    $(this).removeClass('middle');
+    $(this).removeClass('right');
     if (i == 1) $(this).addClass('left');  
     else if (i == 2) $(this).addClass('middle');
     else $(this).addClass('right');
@@ -224,6 +227,8 @@ parent.removeChild(child);
           uref.child(id).remove();
 
 },500);
+           
+                            setTimeout(function() { eachFunc();}, 1000);
 
 
           
